@@ -6,6 +6,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	swaggerFiles "github.com/swaggo/files"
 	"log"
+	"github.com/thiago-tertuliano/Financa-API/config"
 
 )
 
@@ -16,6 +17,8 @@ import (
 // @BasePath /api/v1
 
 func main() {
+	cfg := config.LoadConfig()
+
 	r := gin.Default()
 
 	// Rotas públicas
@@ -40,6 +43,6 @@ func main() {
 	// Swagger docs
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	log.Println("Servidor rodando na porta 8080")
-    r.Run(":8080")
+	log.Println("Servidor rodando na porta %s", cfg.Port)
+    r.Run(":" + cfg.Port)
 }
